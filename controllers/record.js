@@ -1,8 +1,8 @@
 const sequelize = require('../models/shared/sequelize');
-const Tag = sequelize.import('../models/tag');
+const Record = sequelize.import('../models/record');
 
-exports.createTag = async (ctx) => {
-  const {idNum, type, icon, name, userId} = ctx.request.body;
+exports.createRecord = async (ctx) => {
+  const {idNum, type, icon, amount, note, createdDate, userId} = ctx.request.body;
 
   if (!userId) {
     ctx.throw(400, {
@@ -12,12 +12,14 @@ exports.createTag = async (ctx) => {
   }
 
   try {
-    await Tag.create({
+    await Record.create({
       userId,
       type,
+      note,
       icon,
-      name,
-      idNum
+      amount,
+      idNum,
+      createdDate
     });
   } catch (err) {
     ctx.throw(400, {
@@ -28,11 +30,11 @@ exports.createTag = async (ctx) => {
 
   ctx.body = {
     code: 200,
-    content: "创建标签成功"
+    content: "记录成功"
   };
 };
 
-exports.getTagByUser = async (ctx) => {
+exports.getRecordByUser = async (ctx) => {
   const {userId} = ctx.request.query;
 
   if (!userId) {
@@ -42,7 +44,7 @@ exports.getTagByUser = async (ctx) => {
     });
   }
 
-  const tagsList = await Tag.findAll({
+  const recordList = await Record.findAll({
     where: {userId},
     attributes: {
       exclude: ['createdAt', 'updatedAt', 'deletedAt', 'userId', 'id']
@@ -51,12 +53,12 @@ exports.getTagByUser = async (ctx) => {
 
   ctx.body = {
     code: 200,
-    tagsList: tagsList
+    recordList: recordList
   };
 };
 
-exports.updateTag = async (ctx) => {
-  const {idNum, type, icon, name, userId} = ctx.request.body;
+exports.updateRecord = async (ctx) => {
+  const {idNum, type, icon, amount, note, createdDate, userId} = ctx.request.body;
 
   if (!userId || !idNum) {
     ctx.throw(400, {
@@ -66,10 +68,12 @@ exports.updateTag = async (ctx) => {
   }
 
   try {
-    await Tag.update({
+    await Record.update({
       type: type,
       icon: icon,
-      name: name
+      amount: amount,
+      note: note,
+      createdDate: createdDate
     }, {
       where: {idNum}
     });
@@ -86,7 +90,7 @@ exports.updateTag = async (ctx) => {
   };
 };
 
-exports.deleteTag = async (ctx) => {
+exports.deleteRecord = async (ctx) => {
   const {userId, idNum} = ctx.request.query;
 
   if (!userId || !idNum) {
@@ -97,7 +101,7 @@ exports.deleteTag = async (ctx) => {
   }
 
   try {
-    await Tag.destroy({
+    await Record.destroy({
       where: {idNum}
     });
   } catch (err) {

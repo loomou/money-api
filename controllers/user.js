@@ -82,9 +82,9 @@ exports.login = async (ctx) => {
 };
 
 exports.update = async (ctx) => {
-  const {userId, gender, nickname} = ctx.request.body;
+  const {id, gender, nickname} = ctx.request.body;
 
-  if (!userId) {
+  if (!id) {
     ctx.throw(400, {
       code: 400,
       message: "用户不存在"
@@ -96,7 +96,7 @@ exports.update = async (ctx) => {
       gender: gender,
       nickname: nickname
     }, {
-      where: {userId}
+      where: {id}
     });
   } catch (err) {
     ctx.throw(400, {
