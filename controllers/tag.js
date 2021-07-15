@@ -2,7 +2,7 @@ const sequelize = require('../models/shared/sequelize');
 const Tag = sequelize.import('../models/tag');
 
 exports.createTag = async (ctx) => {
-  const {idNum, type, icon, name, userId} = ctx.request.body;
+  const {type, icon, name, userId} = ctx.request.body;
 
   if (!userId) {
     ctx.throw(400, {
@@ -16,8 +16,7 @@ exports.createTag = async (ctx) => {
       userId,
       type,
       icon,
-      name,
-      idNum
+      name
     });
   } catch (err) {
     ctx.throw(400, {
@@ -45,7 +44,7 @@ exports.getTagByUser = async (ctx) => {
   const tagsList = await Tag.findAll({
     where: {userId},
     attributes: {
-      exclude: ['createdAt', 'updatedAt', 'deletedAt', 'userId', 'id']
+      exclude: ['createdAt', 'updatedAt', 'deletedAt', 'userId']
     }
   });
 
@@ -56,9 +55,9 @@ exports.getTagByUser = async (ctx) => {
 };
 
 exports.updateTag = async (ctx) => {
-  const {idNum, type, icon, name, userId} = ctx.request.body;
+  const {id, type, icon, name, userId} = ctx.request.body;
 
-  if (!userId || !idNum) {
+  if (!userId || !id) {
     ctx.throw(400, {
       code: 400,
       message: "信息错误"
@@ -71,7 +70,7 @@ exports.updateTag = async (ctx) => {
       icon: icon,
       name: name
     }, {
-      where: {idNum}
+      where: {id}
     });
   } catch (err) {
     ctx.throw(400, {
@@ -87,9 +86,9 @@ exports.updateTag = async (ctx) => {
 };
 
 exports.deleteTag = async (ctx) => {
-  const {userId, idNum} = ctx.request.query;
+  const {userId, id} = ctx.request.query;
 
-  if (!userId || !idNum) {
+  if (!userId || !id) {
     ctx.throw(400, {
       code: 400,
       message: "信息错误"
@@ -98,7 +97,7 @@ exports.deleteTag = async (ctx) => {
 
   try {
     await Tag.destroy({
-      where: {idNum}
+      where: {id}
     });
   } catch (err) {
     ctx.throw(400, {

@@ -23,11 +23,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         comment: '标签图标'
       },
-      idNum: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        comment: 'idNum'
-      },
+      // idNum: {
+      //   type: DataTypes.STRING,
+      //   allowNull: false,
+      //   comment: 'idNum'
+      // },
     },
     {
       sequelize: sequelize,

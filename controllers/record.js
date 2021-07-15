@@ -2,7 +2,7 @@ const sequelize = require('../models/shared/sequelize');
 const Record = sequelize.import('../models/record');
 
 exports.createRecord = async (ctx) => {
-  const {idNum, type, icon, amount, note, createdDate, userId} = ctx.request.body;
+  const {type, icon, amount, note, createdAt, userId} = ctx.request.body;
 
   if (!userId) {
     ctx.throw(400, {
@@ -18,8 +18,7 @@ exports.createRecord = async (ctx) => {
       note,
       icon,
       amount,
-      idNum,
-      createdDate
+      createdAt
     });
   } catch (err) {
     ctx.throw(400, {
@@ -47,7 +46,7 @@ exports.getRecordByUser = async (ctx) => {
   const recordList = await Record.findAll({
     where: {userId},
     attributes: {
-      exclude: ['createdAt', 'updatedAt', 'deletedAt', 'userId', 'id']
+      exclude: ['updatedAt', 'deletedAt', 'userId']
     }
   });
 
@@ -58,9 +57,9 @@ exports.getRecordByUser = async (ctx) => {
 };
 
 exports.updateRecord = async (ctx) => {
-  const {idNum, type, icon, amount, note, createdDate, userId} = ctx.request.body;
+  const {id, type, icon, amount, note, createdAt, userId} = ctx.request.body;
 
-  if (!userId || !idNum) {
+  if (!userId || !id) {
     ctx.throw(400, {
       code: 400,
       message: "信息错误"
@@ -73,9 +72,9 @@ exports.updateRecord = async (ctx) => {
       icon: icon,
       amount: amount,
       note: note,
-      createdDate: createdDate
+      createdAt: createdAt
     }, {
-      where: {idNum}
+      where: {id}
     });
   } catch (err) {
     ctx.throw(400, {
@@ -91,9 +90,9 @@ exports.updateRecord = async (ctx) => {
 };
 
 exports.deleteRecord = async (ctx) => {
-  const {userId, idNum} = ctx.request.query;
+  const {userId, id} = ctx.request.query;
 
-  if (!userId || !idNum) {
+  if (!userId || !id) {
     ctx.throw(400, {
       code: 400,
       message: "信息错误"
@@ -102,7 +101,7 @@ exports.deleteRecord = async (ctx) => {
 
   try {
     await Record.destroy({
-      where: {idNum}
+      where: {id}
     });
   } catch (err) {
     ctx.throw(400, {

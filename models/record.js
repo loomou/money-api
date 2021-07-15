@@ -14,12 +14,12 @@ module.exports = (sequelize, DataTypes) => {
         comment: '收支类型'
       },
       note: {
-        type: DataTypes.STRING(140),
+        type: DataTypes.STRING,
         allowNull: false,
         comment: '备注'
       },
       icon: {
-        type: DataTypes.STRING(140),
+        type: DataTypes.STRING,
         allowNull: false,
         comment: '标签图标'
       },
@@ -29,16 +29,16 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: 0,
         comment: '总数'
       },
-      idNum: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        comment: 'idNum'
-      },
-      createdDate: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        comment: '时间'
-      }
+      // idNum: {
+      //   type: DataTypes.STRING,
+      //   allowNull: false,
+      //   comment: 'idNum'
+      // },
+      // createdDate: {
+      //   type: DataTypes.STRING,
+      //   allowNull: false,
+      //   comment: '时间'
+      // }
     },
     {
       sequelize: sequelize,
