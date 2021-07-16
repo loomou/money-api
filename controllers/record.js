@@ -133,7 +133,7 @@ exports.findRecord = async (ctx) => {
     });
   }
 
-  const inf = Record.findOne({
+  const inf = await Record.findOne({
     where: {userId, id},
     attributes: {
       exclude: ['updatedAt', 'deletedAt', 'userId']

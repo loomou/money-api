@@ -122,9 +122,9 @@ exports.findUser = async (ctx) => {
   }
 
   const inf = await User.findOne({
-    where: {userId},
+    where: {id: userId},
     attributes: {
-      exclude: ['updatedAt', 'deletedAt', 'id', 'password', 'username', 'avatar']
+      exclude: ['createdAt', 'updatedAt', 'deletedAt', 'id', 'password', 'username', 'avatar']
     }
   });
 

@@ -129,10 +129,10 @@ exports.findTag = async (ctx) => {
     });
   }
 
-  const inf = Tag.findOne({
+  const inf = await Tag.findOne({
     where: {userId, id},
     attributes: {
-      exclude: ['updatedAt', 'deletedAt', 'userId']
+      exclude: ['createdAt', 'updatedAt', 'deletedAt', 'userId']
     }
   });
 
