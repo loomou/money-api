@@ -50,6 +50,13 @@ exports.getRecordByUser = async (ctx) => {
     }
   });
 
+  if (!recordList) {
+    ctx.throw(400, {
+      code: 400,
+      message: '记录不存在'
+    });
+  }
+
   ctx.body = {
     code: 200,
     recordList: recordList
@@ -113,5 +120,36 @@ exports.deleteRecord = async (ctx) => {
   ctx.body = {
     code: 200,
     content: "删除成功"
+  };
+};
+
+exports.findRecord = async (ctx) => {
+  const {userId, id} = ctx.request.body;
+
+  if (!userId || !id) {
+    ctx.throw(400, {
+      code: 400,
+      message: '无法查找'
+    });
+  }
+
+  const inf = Record.findOne({
+    where: {userId, id},
+    attributes: {
+      exclude: ['updatedAt', 'deletedAt', 'userId']
+    }
+  });
+
+  if (!inf) {
+    ctx.throw(400, {
+      code: 400,
+      message: '记录不存在'
+    });
+  }
+
+  ctx.body = {
+    code: 200,
+    content: '查询成功',
+    inf: inf
   };
 };

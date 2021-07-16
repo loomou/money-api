@@ -29,16 +29,6 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: 0,
         comment: '总数'
       },
-      // idNum: {
-      //   type: DataTypes.STRING,
-      //   allowNull: false,
-      //   comment: 'idNum'
-      // },
-      // createdDate: {
-      //   type: DataTypes.STRING,
-      //   allowNull: false,
-      //   comment: '时间'
-      // }
     },
     {
       sequelize: sequelize,

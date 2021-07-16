@@ -110,3 +110,34 @@ exports.update = async (ctx) => {
     content: "修改成功"
   };
 };
+
+exports.findUser = async (ctx) => {
+  const {userId} = ctx.request.body;
+
+  if (!userId) {
+    ctx.throw(400, {
+      code: 400,
+      message: '不存在用户'
+    });
+  }
+
+  const inf = await User.findOne({
+    where: {userId},
+    attributes: {
+      exclude: ['updatedAt', 'deletedAt', 'id', 'password', 'username', 'avatar']
+    }
+  });
+
+  if (!inf) {
+    ctx.throw(400, {
+      code: 400,
+      message: '用户信息不存在'
+    });
+  }
+
+  ctx.body = {
+    code: 200,
+    content: '查找成功',
+    inf: inf
+  };
+};

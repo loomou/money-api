@@ -7,5 +7,6 @@ router.post('/create', record.createRecord);
 router.get('/get', record.getRecordByUser);
 router.post('/update', record.updateRecord);
 router.delete('/delete', record.deleteRecord);
+router.post('/find', record.findRecord);
 
 module.exports = router;

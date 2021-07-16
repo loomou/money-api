@@ -48,6 +48,13 @@ exports.getTagByUser = async (ctx) => {
     }
   });
 
+  if (!tagsList) {
+    ctx.throw(400, {
+      code: 400,
+      message: '标签不存在'
+    });
+  }
+
   ctx.body = {
     code: 200,
     tagsList: tagsList
@@ -109,5 +116,36 @@ exports.deleteTag = async (ctx) => {
   ctx.body = {
     code: 200,
     content: "删除成功"
+  };
+};
+
+exports.findTag = async (ctx) => {
+  const {userId, id} = ctx.request.body;
+
+  if (!userId || !id) {
+    ctx.throw(400, {
+      code: 400,
+      message: '无法查找'
+    });
+  }
+
+  const inf = Tag.findOne({
+    where: {userId, id},
+    attributes: {
+      exclude: ['updatedAt', 'deletedAt', 'userId']
+    }
+  });
+
+  if (!inf) {
+    ctx.throw(400, {
+      code: 400,
+      message: '标签不存在'
+    });
+  }
+
+  ctx.body = {
+    code: 200,
+    content: '查询成功',
+    inf: inf
   };
 };

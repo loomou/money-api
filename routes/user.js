@@ -6,5 +6,6 @@ const router = new Router({prefix: '/api/user'});
 router.post('/signup', user.signup);
 router.post('/login', user.login);
 router.post('/update', user.update);
+router.post('/find', user.findUser);
 
 module.exports = router;
