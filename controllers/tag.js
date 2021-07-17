@@ -1,5 +1,6 @@
 const sequelize = require('../models/shared/sequelize');
 const Tag = sequelize.import('../models/tag');
+const Record = sequelize.import('../models/record');
 
 exports.createTag = async (ctx) => {
   const {type, icon, name, userId} = ctx.request.body;
@@ -8,6 +9,17 @@ exports.createTag = async (ctx) => {
     ctx.throw(400, {
       code: 400,
       message: "记录不能为空"
+    });
+  }
+
+  const findTag = await Tag.findOne({
+    where: {name}
+  });
+
+  if (findTag) {
+    ctx.throw(400, {
+      code: 400,
+      message: "标签名重复"
     });
   }
 
@@ -102,9 +114,26 @@ exports.deleteTag = async (ctx) => {
     });
   }
 
+  const findTag = await Tag.findOne({
+    where: {id}
+  })
+
   try {
     await Tag.destroy({
       where: {id}
+    });
+  } catch (err) {
+    ctx.throw(400, {
+      code: 400,
+      message: err.msg
+    });
+  }
+
+  try {
+    await Record.update({
+      icon: findTag.type === 'pay' ? '-20' : '-21'
+    }, {
+      where: {icon: id}
     });
   } catch (err) {
     ctx.throw(400, {
