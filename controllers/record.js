@@ -6,8 +6,8 @@ exports.createRecord = async (ctx) => {
 
   if (!userId) {
     ctx.throw(400, {
-      code: 400,
-      message: "记录不能为空"
+      code: 1111,
+      content: "缺少用户信息"
     });
   }
 
@@ -22,7 +22,8 @@ exports.createRecord = async (ctx) => {
     });
   } catch (err) {
     ctx.throw(400, {
-      code: 400,
+      code: 1005,
+      content: '记录失败',
       message: err.msg
     });
   }
@@ -38,8 +39,8 @@ exports.getRecordByUser = async (ctx) => {
 
   if (!userId) {
     ctx.throw(400, {
-      code: 400,
-      message: "不存在"
+      code: 1111,
+      content: '用户不存在',
     });
   }
 
@@ -52,8 +53,8 @@ exports.getRecordByUser = async (ctx) => {
 
   if (!recordList) {
     ctx.throw(400, {
-      code: 400,
-      message: '记录不存在'
+      code: 1006,
+      content: '记录不存在'
     });
   }
 
@@ -68,8 +69,8 @@ exports.updateRecord = async (ctx) => {
 
   if (!userId || !id) {
     ctx.throw(400, {
-      code: 400,
-      message: "信息错误"
+      code: 1111,
+      content: "缺少用户信息"
     });
   }
 
@@ -85,14 +86,15 @@ exports.updateRecord = async (ctx) => {
     });
   } catch (err) {
     ctx.throw(400, {
-      code: 400,
+      code: 1007,
+      content: '记录更新失败',
       message: err.msg
     });
   }
 
   ctx.body = {
     code: 200,
-    message: '修改成功'
+    content: '修改成功'
   };
 };
 
@@ -101,8 +103,8 @@ exports.deleteRecord = async (ctx) => {
 
   if (!userId || !id) {
     ctx.throw(400, {
-      code: 400,
-      message: "信息错误"
+      code: 1111,
+      content: "信息错误"
     });
   }
 
@@ -112,7 +114,8 @@ exports.deleteRecord = async (ctx) => {
     });
   } catch (err) {
     ctx.throw(400, {
-      code: 400,
+      code: 1008,
+      content: '记录删除失败',
       message: err.msg
     });
   }
@@ -128,8 +131,8 @@ exports.findRecord = async (ctx) => {
 
   if (!userId || !id) {
     ctx.throw(400, {
-      code: 400,
-      message: '无法查找'
+      code: 1111,
+      content: '缺少用户信息'
     });
   }
 
@@ -142,8 +145,8 @@ exports.findRecord = async (ctx) => {
 
   if (!inf) {
     ctx.throw(400, {
-      code: 400,
-      message: '记录不存在'
+      code: 1009,
+      content: '记录不存在'
     });
   }
 

@@ -8,8 +8,8 @@ exports.signup = async (ctx) => {
 
   if (password !== confirmPassword) {
     ctx.throw(400, {
-      code: 400,
-      message: "确认密码不一致"
+      code: 1112,
+      content: "确认密码不一致",
     });
   }
 
@@ -19,8 +19,8 @@ exports.signup = async (ctx) => {
 
   if (user !== null) {
     ctx.throw(400, {
-      code: 400,
-      message: "用户名重复"
+      code: 1000,
+      content: "用户名重复"
     });
   }
 
@@ -31,7 +31,8 @@ exports.signup = async (ctx) => {
     });
   } catch (err) {
     ctx.throw(400, {
-      code: 400,
+      code: 1001,
+      content: '注册失败',
       message: err.msg
     });
   }
@@ -47,8 +48,8 @@ exports.login = async (ctx) => {
 
   if (!username || !password) {
     ctx.throw(400, {
-      code: 400,
-      message: "请填写完整"
+      code: 1112,
+      content: "请填写完整"
     });
   }
 
@@ -57,9 +58,9 @@ exports.login = async (ctx) => {
   });
 
   if (user === null || !user.checkPassword(password)) {
-    ctx.throw(401, {
-      code: 401,
-      message: "账号或密码错误"
+    ctx.throw(400, {
+      code: 1002,
+      content: "账号或密码错误"
     });
   }
 
@@ -86,8 +87,8 @@ exports.update = async (ctx) => {
 
   if (!id) {
     ctx.throw(400, {
-      code: 400,
-      message: "用户不存在"
+      code: 1111,
+      content: "用户不存在"
     });
   }
 
@@ -100,8 +101,8 @@ exports.update = async (ctx) => {
     });
   } catch (err) {
     ctx.throw(400, {
-      code: 400,
-      message: "修改失败"
+      code: 1003,
+      content: "用户信息修改失败"
     });
   }
 
@@ -116,8 +117,8 @@ exports.findUser = async (ctx) => {
 
   if (!userId) {
     ctx.throw(400, {
-      code: 400,
-      message: '不存在用户'
+      code: 1111,
+      content: '不存在用户'
     });
   }
 
@@ -130,8 +131,8 @@ exports.findUser = async (ctx) => {
 
   if (!inf) {
     ctx.throw(400, {
-      code: 400,
-      message: '用户信息不存在'
+      code: 1004,
+      content: '用户信息不存在'
     });
   }
 

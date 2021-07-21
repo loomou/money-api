@@ -7,8 +7,8 @@ exports.createTag = async (ctx) => {
 
   if (!userId) {
     ctx.throw(400, {
-      code: 400,
-      message: "记录不能为空"
+      code: 1111,
+      content: "缺少用户信息"
     });
   }
 
@@ -18,8 +18,8 @@ exports.createTag = async (ctx) => {
 
   if (findTag) {
     ctx.throw(400, {
-      code: 400,
-      message: "标签名重复"
+      code: 1010,
+      content: "标签名重复"
     });
   }
 
@@ -32,7 +32,8 @@ exports.createTag = async (ctx) => {
     });
   } catch (err) {
     ctx.throw(400, {
-      code: 400,
+      code: 1011,
+      content: '创建标签失败',
       message: err.msg
     });
   }
@@ -48,8 +49,8 @@ exports.getTagByUser = async (ctx) => {
 
   if (!userId) {
     ctx.throw(400, {
-      code: 400,
-      message: "不存在"
+      code: 1111,
+      content: "缺少用户信息"
     });
   }
 
@@ -62,8 +63,8 @@ exports.getTagByUser = async (ctx) => {
 
   if (!tagsList) {
     ctx.throw(400, {
-      code: 400,
-      message: '标签不存在'
+      code: 1012,
+      content: '标签不存在'
     });
   }
 
@@ -78,8 +79,8 @@ exports.updateTag = async (ctx) => {
 
   if (!userId || !id) {
     ctx.throw(400, {
-      code: 400,
-      message: "信息错误"
+      code: 1111,
+      content: "缺少用户信息"
     });
   }
 
@@ -93,14 +94,15 @@ exports.updateTag = async (ctx) => {
     });
   } catch (err) {
     ctx.throw(400, {
-      code: 400,
+      code: 1013,
+      content: '标签更新失败',
       message: err.msg
     });
   }
 
   ctx.body = {
     code: 200,
-    message: '修改成功'
+    content: '修改成功'
   };
 };
 
@@ -109,8 +111,8 @@ exports.deleteTag = async (ctx) => {
 
   if (!userId || !id) {
     ctx.throw(400, {
-      code: 400,
-      message: "信息错误"
+      code: 1111,
+      content: "缺少用户信息"
     });
   }
 
@@ -124,7 +126,8 @@ exports.deleteTag = async (ctx) => {
     });
   } catch (err) {
     ctx.throw(400, {
-      code: 400,
+      code: 1014,
+      content: '标签删除失败',
       message: err.msg
     });
   }
@@ -137,7 +140,8 @@ exports.deleteTag = async (ctx) => {
     });
   } catch (err) {
     ctx.throw(400, {
-      code: 400,
+      code: 1015,
+      content: '记录标签更改失败',
       message: err.msg
     });
   }
@@ -153,8 +157,8 @@ exports.findTag = async (ctx) => {
 
   if (!userId || !id) {
     ctx.throw(400, {
-      code: 400,
-      message: '无法查找'
+      code: 1111,
+      content: '缺少用户信息'
     });
   }
 
@@ -167,8 +171,8 @@ exports.findTag = async (ctx) => {
 
   if (!inf) {
     ctx.throw(400, {
-      code: 400,
-      message: '标签不存在'
+      code: 1016,
+      content: '标签信息不存在'
     });
   }
 
