@@ -6,7 +6,7 @@ const cors = require('kcors');
 
 const userRouter = require('./routes/user');
 const recordRouter = require('./routes/record');
-const tagRouter = require('./routes/tag')
+const tagRouter = require('./routes/tag');
 
 const app = new Koa();
 
@@ -29,6 +29,12 @@ function formatError(err) {
 }
 
 app.use(koaJsonError(formatError));
+
+app.use(koaJwt({
+  secret: 'loginStatus'
+}).unless({
+  path: ['/api/user/login','/api/user/signup']
+}));
 
 app.use(userRouter.routes()).use(userRouter.allowedMethods());
 app.use(recordRouter.routes()).use(recordRouter.allowedMethods());
