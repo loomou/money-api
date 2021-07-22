@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
         comment: '标签图标'
       },
       amount: {
-        type: DataTypes.DECIMAL(7, 2),
+        type: DataTypes.DOUBLE(7, 2),
         allowNull: false,
         defaultValue: 0,
         comment: '总数'
